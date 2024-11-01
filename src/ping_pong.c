@@ -34,7 +34,7 @@ void Draw_moving_ball() {
 }
 
 int main() {
-   
+    int score = 0;
    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Raylib.5.0");
    SetTargetFPS(60);
      while(!WindowShouldClose()) {
@@ -63,6 +63,8 @@ int main() {
 
     DrawRectangle(paddle_x, paddle_y, 10, 200, WHITE);
     DrawRectangle(SCREEN_WIDTH - 20 , paddle_y1, 10, 200, WHITE);
+    DrawText(TextFormat("%d", score), 50, 15, 50, WHITE);
+    DrawText(TextFormat("%d", score), SCREEN_WIDTH - 70, 15, 50, WHITE);
     EndDrawing();
   } 
   CloseWindow();
