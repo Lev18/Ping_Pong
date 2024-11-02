@@ -1,6 +1,10 @@
 #include "raylib.h"
 #include <unistd.h>
-   
+
+
+
+#define LEFT_PADDLE  1
+#define RIGHT_PADDLE 2
 #define SCREEN_WIDTH  800
 #define SCREEN_HEIGHT 600
 
@@ -28,17 +32,26 @@ static int ball_speed_x = 5;
 static int ball_speed_y = 5;
 
 
-int is_ball_touched_to_pannel () {
- 
-  
-   if ((cord_x <= paddle_x) && paddle_y <= cord_y && cord_y < paddle_y + 200) {
-       
-     /*   if (is_ball_touched_to_pannel()) {
-            ball_speed_x *= -1;
-        }*/
-        ball_speed_x *= -1;
-    }   if (true) {
-        return 1;
+int is_ball_touched_to_pannel (int pannel) {
+    if (pannel == RIGHT_PADDLE) {
+        if ((cord_x + ball_radius >= SCREEN_WIDTH - 20) &&
+           paddle_y1 <= cord_y && cord_y <= paddle_y1 + 200) {
+           return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    if (pannel == LEFT_PADDLE) {
+        if ((cord_x - ball_radius < paddle_x + 10) &&
+            paddle_y <= cord_y && cord_y <= paddle_y + 200) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+
     }
     else {
      return 0;
@@ -56,20 +69,13 @@ void Draw_moving_ball() {
     cord_x += ball_speed_x;
     cord_y += ball_speed_y;
 
-    if ((cord_x + ball_radius >= SCREEN_WIDTH - 20) && paddle_y1 <= cord_y && cord_y <= paddle_y1 + 200) {
+    if (is_ball_touched_to_pannel(RIGHT_PADDLE)) {
        
-     /*   if (is_ball_touched_to_pannel()) {
-            ball_speed_x *= -1;
-        }*/
         ball_speed_y *= -1;
         ball_speed_x *= -1;
     }
 
-   if ((cord_x - ball_radius < paddle_x + 10) && paddle_y <= cord_y && cord_y <= paddle_y + 200) {
-       
-     /*   if (is_ball_touched_to_pannel()) {
-            ball_speed_x *= -1;
-        }*/
+   if (is_ball_touched_to_pannel(LEFT_PADDLE)) {
         ball_speed_y *= -1;
         ball_speed_x *= -1;
     }
